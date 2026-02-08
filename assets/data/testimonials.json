@@ -1,0 +1,49 @@
+{
+    "testimonials": [
+        {
+            "id": 1,
+            "name": "Sarah Johnson",
+            "rating": 5,
+            "comment": "Absolutely love the Hydrating Face Serum! My skin has never felt better. Highly recommend DreamyBloom products!",
+            "product": "Hydrating Face Serum",
+            "date": "2026-02-01",
+            "verified": true
+        },
+        {
+            "id": 2,
+            "name": "Emily Chen",
+            "rating": 5,
+            "comment": "The Matte Lipstick Collection is amazing! Long-lasting and the colors are gorgeous. Will definitely buy again!",
+            "product": "Matte Lipstick Collection",
+            "date": "2026-01-28",
+            "verified": true
+        },
+        {
+            "id": 3,
+            "name": "Priya Sharma",
+            "rating": 4,
+            "comment": "Great quality products at affordable prices. The Vitamin C cream really works!",
+            "product": "Vitamin C Brightening Cream",
+            "date": "2026-01-25",
+            "verified": true
+        },
+        {
+            "id": 4,
+            "name": "Jessica Williams",
+            "rating": 5,
+            "comment": "Fast delivery and excellent customer service. The foundation matches my skin tone perfectly!",
+            "product": "Natural Glow Foundation",
+            "date": "2026-01-20",
+            "verified": true
+        },
+        {
+            "id": 5,
+            "name": "Aisha Mohammed",
+            "rating": 5,
+            "comment": "DreamyBloom has become my go-to beauty brand. Everything I've tried has been fantastic!",
+            "product": "Multiple Products",
+            "date": "2026-01-15",
+            "verified": true
+        }
+    ]
+}

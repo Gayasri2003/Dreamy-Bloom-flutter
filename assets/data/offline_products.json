@@ -1,0 +1,76 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Hydrating Face Serum",
+            "slug": "hydrating-face-serum",
+            "description": "Intensive hydration serum with hyaluronic acid for all skin types. Provides deep moisture and plumps the skin.",
+            "price": 2499.00,
+            "category": "Skincare",
+            "image": "assets/images/c1.jpg",
+            "rating": 4.8,
+            "stock": 50,
+            "featured": true
+        },
+        {
+            "id": 2,
+            "name": "Matte Lipstick Collection",
+            "slug": "matte-lipstick-collection",
+            "description": "Long-lasting matte lipstick in 12 stunning shades. Enriched with vitamin E for soft, smooth lips.",
+            "price": 1299.00,
+            "category": "Makeup",
+            "image": "assets/images/c5.png",
+            "rating": 4.6,
+            "stock": 100,
+            "featured": true
+        },
+        {
+            "id": 3,
+            "name": "Vitamin C Brightening Cream",
+            "slug": "vitamin-c-brightening-cream",
+            "description": "Brightening day cream with vitamin C to reduce dark spots and even skin tone.",
+            "price": 3299.00,
+            "category": "Skincare",
+            "image": "assets/images/c2.jpeg",
+            "rating": 4.9,
+            "stock": 30,
+            "featured": true
+        },
+        {
+            "id": 4,
+            "name": "Natural Glow Foundation",
+            "slug": "natural-glow-foundation",
+            "description": "Lightweight foundation with SPF 30 for a natural, radiant finish. Available in 20 shades.",
+            "price": 2799.00,
+            "category": "Makeup",
+            "image": "assets/images/home_image.jpeg",
+            "rating": 4.7,
+            "stock": 75,
+            "featured": false
+        },
+        {
+            "id": 5,
+            "name": "Gentle Cleansing Foam",
+            "slug": "gentle-cleansing-foam",
+            "description": "pH-balanced cleansing foam that removes makeup and impurities without stripping skin.",
+            "price": 1599.00,
+            "category": "Skincare",
+            "image": "assets/images/c1.jpg",
+            "rating": 4.5,
+            "stock": 120,
+            "featured": false
+        },
+        {
+            "id": 6,
+            "name": "Eyeshadow Palette - Sunset Dreams",
+            "slug": "eyeshadow-palette-sunset",
+            "description": "12-color eyeshadow palette with warm tones. Highly pigmented and blendable.",
+            "price": 3499.00,
+            "category": "Makeup",
+            "image": "assets/images/c5.png",
+            "rating": 4.8,
+            "stock": 45,
+            "featured": true
+        }
+    ]
+}
