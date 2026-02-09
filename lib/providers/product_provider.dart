@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart' hide Category;
 import '../models/product.dart';
 import '../models/category.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../services/product_service.dart';
+import '../services/json_data_service.dart';
 
 class ProductProvider with ChangeNotifier {
   final ProductService _productService = ProductService();
+  final JsonDataService _jsonDataService = JsonDataService();
 
   List<Product> _products = [];
   List<Product> get products => _products;
@@ -42,6 +45,13 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      // Check connectivity first
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        await _loadOfflineProducts(refresh: refresh);
+        return;
+      }
+
       final response = await _productService.getProducts(
         category: category,
         search: search,
@@ -93,8 +103,38 @@ class ProductProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
+      print('Error fetching products: $e');
+      // Fallback to offline data
+      await _loadOfflineProducts(refresh: refresh);
+    }
+  }
+
+  Future<void> _loadOfflineProducts({bool refresh = false}) async {
+    try {
+      final offlineProducts = await _jsonDataService.getOfflineProducts();
+      final productList = offlineProducts
+          .map((json) => Product.fromJson(json as Map<String, dynamic>))
+          .toList();
+
+      if (refresh) {
+        _products = productList;
+      } else {
+        // Prevent duplicates if needed, or just add
+        // Simple distinct check by ID could be useful
+        final existingIds = _products.map((p) => p.id).toSet();
+        for (var p in productList) {
+          if (!existingIds.contains(p.id)) {
+            _products.add(p);
+          }
+        }
+      }
+
+      _hasMore = false; // Assume offline data is a single page
       _isLoading = false;
-      _error = 'An error occurred: ${e.toString()}';
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _error = 'Failed to load offline data: $e';
       notifyListeners();
     }
   }

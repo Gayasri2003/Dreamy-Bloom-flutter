@@ -6,8 +6,14 @@
             "slug": "hydrating-face-serum",
             "description": "Intensive hydration serum with hyaluronic acid for all skin types. Provides deep moisture and plumps the skin.",
             "price": 2499.00,
-            "category": "Skincare",
-            "image": "assets/images/c1.jpg",
+            "category": {
+                "id": 1,
+                "name": "Skincare",
+                "slug": "skincare",
+                "image": "assets/images/Vitamin C Brightening Serum.webp",
+                "is_active": true
+            },
+            "image": "assets/images/Vitamin C Brightening Serum.webp",
             "rating": 4.8,
             "stock": 50,
             "featured": true
@@ -18,8 +24,14 @@
             "slug": "matte-lipstick-collection",
             "description": "Long-lasting matte lipstick in 12 stunning shades. Enriched with vitamin E for soft, smooth lips.",
             "price": 1299.00,
-            "category": "Makeup",
-            "image": "assets/images/c5.png",
+            "category": {
+                "id": 2,
+                "name": "Makeup",
+                "slug": "makeup",
+                "image": "assets/images/lipstick.jpg",
+                "is_active": true
+            },
+            "image": "assets/images/lipstick.jpg",
             "rating": 4.6,
             "stock": 100,
             "featured": true
@@ -30,8 +42,14 @@
             "slug": "vitamin-c-brightening-cream",
             "description": "Brightening day cream with vitamin C to reduce dark spots and even skin tone.",
             "price": 3299.00,
-            "category": "Skincare",
-            "image": "assets/images/c2.jpeg",
+            "category": {
+                "id": 1,
+                "name": "Skincare",
+                "slug": "skincare",
+                "image": "assets/images/cream.jpg",
+                "is_active": true
+            },
+            "image": "assets/images/cream.jpg",
             "rating": 4.9,
             "stock": 30,
             "featured": true
@@ -42,8 +60,14 @@
             "slug": "natural-glow-foundation",
             "description": "Lightweight foundation with SPF 30 for a natural, radiant finish. Available in 20 shades.",
             "price": 2799.00,
-            "category": "Makeup",
-            "image": "assets/images/home_image.jpeg",
+            "category": {
+                "id": 2,
+                "name": "Makeup",
+                "slug": "makeup",
+                "image": "assets/images/foundation.jpg",
+                "is_active": true
+            },
+            "image": "assets/images/foundation.jpg",
             "rating": 4.7,
             "stock": 75,
             "featured": false
@@ -54,8 +78,14 @@
             "slug": "gentle-cleansing-foam",
             "description": "pH-balanced cleansing foam that removes makeup and impurities without stripping skin.",
             "price": 1599.00,
-            "category": "Skincare",
-            "image": "assets/images/c1.jpg",
+            "category": {
+                "id": 1,
+                "name": "Skincare",
+                "slug": "skincare",
+                "image": "assets/images/cleanser.jpg",
+                "is_active": true
+            },
+            "image": "assets/images/cleanser.jpg",
             "rating": 4.5,
             "stock": 120,
             "featured": false
@@ -66,8 +96,14 @@
             "slug": "eyeshadow-palette-sunset",
             "description": "12-color eyeshadow palette with warm tones. Highly pigmented and blendable.",
             "price": 3499.00,
-            "category": "Makeup",
-            "image": "assets/images/c5.png",
+            "category": {
+                "id": 2,
+                "name": "Makeup",
+                "slug": "makeup",
+                "image": "assets/images/eyebrow.jpg",
+                "is_active": true
+            },
+            "image": "assets/images/eyebrow.jpg",
             "rating": 4.8,
             "stock": 45,
             "featured": true

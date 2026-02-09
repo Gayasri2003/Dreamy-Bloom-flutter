@@ -36,27 +36,7 @@ class CategoryCard extends StatelessWidget {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSpacing.radiusMedium),
-                child: CachedNetworkImage(
-                  imageUrl: ApiConfig.getImageUrl(category.image),
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    color: AppColors.bgLightPink,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    color: AppColors.bgLightPink,
-                    child: const Icon(
-                      Icons.category,
-                      color: AppColors.primaryLight,
-                      size: 40,
-                    ),
-                  ),
-                ),
+                child: _buildCategoryImage(context),
               ),
             ),
             Padding(
@@ -75,6 +55,45 @@ class CategoryCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryImage(BuildContext context) {
+    final imageUrl = ApiConfig.getImageUrl(category.image);
+
+    if (imageUrl.startsWith('assets/')) {
+      return Image.asset(
+        imageUrl,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _buildErrorWidget(),
+      );
+    }
+
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      placeholder: (context, url) =>Container(
+        color: AppColors.bgLightPink,
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primaryColor,
+          ),
+        ),
+      ),
+      errorWidget: (context, url, error) => _buildErrorWidget(),
+    );
+  }
+
+  Widget _buildErrorWidget() {
+    return Container(
+      color: AppColors.bgLightPink,
+      child: const Icon(
+        Icons.category,
+        color: AppColors.primaryLight,
+        size: 40,
       ),
     );
   }
