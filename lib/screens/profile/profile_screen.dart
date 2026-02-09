@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../../config/api_config.dart';
 import '../../config/theme_config.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/app_bottom_nav.dart';
@@ -55,21 +59,24 @@ class ProfileScreen extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 50,
                                 backgroundColor: Colors.white,
-                                child: Text(
-                                  user.name[0].toUpperCase(),
-                                  style: const TextStyle(
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
+                                backgroundImage: user.image != null && user.image!.isNotEmpty
+                                    ? NetworkImage(ApiConfig.getImageUrl(user.image))
+                                    : null,
+                                child: user.image == null || user.image!.isEmpty
+                                    ? Text(
+                                        user.name[0].toUpperCase(),
+                                        style: const TextStyle(
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      )
+                                    : null,
                               ),
                             ),
 
                             InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/change-profile-photo');
-                              },
+                              onTap: () => _showImagePickerOptions(context),
                               borderRadius: BorderRadius.circular(20),
                               child: Container(
                                 padding: const EdgeInsets.all(8),
@@ -347,6 +354,101 @@ class ProfileScreen extends StatelessWidget {
       await Provider.of<AuthProvider>(context, listen: false).logout();
       if (context.mounted) {
         Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      }
+    }
+  }
+
+
+  Future<void> _showImagePickerOptions(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text('Gallery'),
+              onTap: () {
+                Navigator.pop(context);
+                _pickImage(context, ImageSource.gallery);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text('Camera'),
+              onTap: () {
+                Navigator.pop(context);
+                _pickImage(context, ImageSource.camera);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    if (source == ImageSource.camera) {
+      final status = await Permission.camera.request();
+      if (status.isDenied) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Camera permission denied')),
+          );
+        }
+        return;
+      }
+    }
+
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(
+        source: source,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
+
+      if (pickedFile != null && context.mounted) {
+        final file = File(pickedFile.path);
+        // Show loading indicator
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Uploading profile picture...')),
+          );
+        }
+        
+        final success = await Provider.of<AuthProvider>(context, listen: false)
+            .updateProfilePicture(file);
+
+        if (context.mounted) {
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Profile picture updated successfully')),
+            );
+          } else {
+            final error =
+                Provider.of<AuthProvider>(context, listen: false).error;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(error ?? 'Failed to update profile picture'),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error picking image: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
       }
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
 import '../models/api_response.dart';
 import 'api_service.dart';
@@ -108,6 +110,21 @@ class AuthService {
     };
 
     return await _apiService.put(ApiConfig.updatePassword, data, auth: true);
+  }
+
+  // Update Profile Picture
+  Future<ApiResponse> updateProfilePicture(File image) async {
+    final file = await http.MultipartFile.fromPath(
+      'image', 
+      image.path,
+    );
+    
+    return await _apiService.postMultipart(
+      ApiConfig.updateProfilePicture, 
+      {}, 
+      file, 
+      auth: true,
+    );
   }
 
   // Check if user is authenticated

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
@@ -173,6 +174,32 @@ class AuthProvider with ChangeNotifier {
       _isLoading = false;
 
       if (response.success) {
+        return true;
+      } else {
+        _error = response.message;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _isLoading = false;
+      _error = 'An error occurred: ${e.toString()}';
+      notifyListeners();
+      return false;
+    }
+  }
+
+  // Update Profile Picture
+  Future<bool> updateProfilePicture(File image) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final response = await _authService.updateProfilePicture(image);
+      _isLoading = false;
+
+      if (response.success) {
+        await refreshProfile();
         return true;
       } else {
         _error = response.message;

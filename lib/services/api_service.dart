@@ -133,4 +133,42 @@ class ApiService {
       );
     }
   }
+
+  // Multipart POST Request
+  Future<ApiResponse> postMultipart(
+    String endpoint,
+    Map<String, String> fields,
+    http.MultipartFile? file, {
+    bool auth = false,
+  }) async {
+    try {
+      final url = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+      final request = http.MultipartRequest('POST', url);
+
+      // Add headers
+      final headers = await _getHeaders(includeAuth: auth);
+      // Remove Content-Type as MultipartRequest sets it automatically with boundary
+      headers.remove('Content-Type');
+      request.headers.addAll(headers);
+
+      // Add fields
+      request.fields.addAll(fields);
+
+      // Add file
+      if (file != null) {
+        request.files.add(file);
+      }
+
+      final streamedResponse = await request.send()
+          .timeout(const Duration(seconds: 60));
+      final response = await http.Response.fromStream(streamedResponse);
+
+      return _handleResponse(response);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        message: 'Network error: ${e.toString()}',
+      );
+    }
+  }
 }

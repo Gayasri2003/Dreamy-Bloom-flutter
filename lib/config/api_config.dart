@@ -9,6 +9,7 @@ class ApiConfig {
   static const String logout = '/logout';
   static const String user = '/user';
   static const String updateProfile = '/user/profile';
+  static const String updateProfilePicture = '/user/profile-photo';
   static const String updatePassword = '/user/password';
   
   // Product Endpoints
