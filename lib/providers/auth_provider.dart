@@ -153,6 +153,40 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  // Update Password
+  Future<bool> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String passwordConfirmation,
+  }) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final response = await _authService.updatePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        passwordConfirmation: passwordConfirmation,
+      );
+
+      _isLoading = false;
+
+      if (response.success) {
+        return true;
+      } else {
+        _error = response.message;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _isLoading = false;
+      _error = 'An error occurred: ${e.toString()}';
+      notifyListeners();
+      return false;
+    }
+  }
+
   // Refresh profile data
   Future<void> refreshProfile() async {
     try {

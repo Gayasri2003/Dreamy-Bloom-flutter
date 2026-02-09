@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../config/theme_config.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/app_bottom_nav.dart';
+import 'change_password_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -145,6 +146,19 @@ class ProfileScreen extends StatelessWidget {
                               'Edit Profile',
                               () =>
                                   Navigator.pushNamed(context, '/edit-profile'),
+                            ),
+                            _buildDivider(),
+                            _buildMenuItem(
+                              context,
+                              Icons.lock_outline,
+                              'Change Password',
+                              () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ChangePasswordScreen(),
+                                ),
+                              ),
                             ),
                             _buildDivider(),
                             _buildMenuItem(

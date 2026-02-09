@@ -44,6 +44,9 @@ class ApiConfig {
   // Helper method to construct image URLs
   static String getImageUrl(String? imagePath) {
     if (imagePath == null || imagePath.isEmpty) return '';
+    if (imagePath.startsWith('assets/') || imagePath.startsWith('http')) {
+      return imagePath;
+    }
     return '$storageUrl/$imagePath';
   }
 }
